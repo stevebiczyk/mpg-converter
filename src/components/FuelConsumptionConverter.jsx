@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { RotateCcw } from "lucide-react";
+import { Copy, RotateCcw } from "lucide-react";
 
 const FuelConsumptionConverter = () => {
   const [value, setValue] = useState("");
@@ -81,6 +81,21 @@ const FuelConsumptionConverter = () => {
   const handleReset = () => {
     setValue("");
   };
+  const ResultRow = ({ label, value }) => (
+    <div className="space-y-2">
+      <div className="flex justify-between items-center">
+        <Label>{label}</Label>
+        <div className="flex space-x-2">
+          <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
+            {value}
+          </div>
+        </div>
+        <Button variant="outline" size="icon" onClick={() => handleCopy(value)}>
+          <Copy className="h-4 w-4" />
+        </Button>
+      </div>
+    </div>
+  );
 
   return (
     <Card className="w-full max-w-md">
@@ -119,53 +134,14 @@ const FuelConsumptionConverter = () => {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label>Imperial MPG</Label>
-            <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
-              {results.impmpg || "0.00"}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label>US MPG</Label>
-            <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
-              {results.usmpg || "0.00"}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Kilometers per Liter </Label>
-            <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
-              {results.kmpl || "0.00"}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Liters per 100Km</Label>
-            <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
-              {results.lper100km || "0.00"}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Miles per Liter</Label>
-            <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
-              {results.mpl || "0.00"}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Km per Imperial Gallon</Label>
-            <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
-              {results.kmpig || "0.00"}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Km per US Gallon</Label>
-            <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
-              {results.kmpusg || "0.00"}
-            </div>
+          <div className="space-y-4">
+            <ResultRow label="Imperial MPG" value={results.impmpg} />
+            <ResultRow label="US MPG" value={results.usmpg} />
+            <ResultRow label="Kilometers per Liter" value={results.kmpl} />
+            <ResultRow label="L/100KM" value={results.lper100km} />
+            <ResultRow label="Miles per Liter" value={results.mpl} />
+            <ResultRow label="KM per Imperial Gallon" value={results.kmpig} />
+            <ResultRow label="KM per US Gallon" value={results.kmpusg} />
           </div>
         </div>
       </CardContent>
