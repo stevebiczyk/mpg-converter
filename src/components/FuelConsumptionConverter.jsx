@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const MpgToKplConverter = () => {
+const FuelConsumptionConverter = () => {
   const [mpg, setMpg] = useState("");
 
   // Conversion constants
@@ -37,7 +37,7 @@ const MpgToKplConverter = () => {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle>MPG to KPL Converter</CardTitle>
+        <CardTitle>MPG Converter</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -55,14 +55,14 @@ const MpgToKplConverter = () => {
 
           <div className="space-y-2">
             <Label>Kilometers per Liter (KPL)</Label>
-            <div className="p-2 bg-gray-100 rounded-md text-lg font-medium">
+            <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
               {calculateKpl(mpg) || "0.00"} KPL
             </div>
           </div>
 
           <div className="space-y-2">
             <Label>Liters per 100 Kilometers (L/100km)</Label>
-            <div className="p-2 bg-gray-100 rounded-md text-lg font-medium">
+            <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
               {calculateLper100km(mpg) || "0.00"} L/100km
             </div>
           </div>
@@ -72,4 +72,4 @@ const MpgToKplConverter = () => {
   );
 };
 
-export default MpgToKplConverter;
+export default FuelConsumptionConverter;
