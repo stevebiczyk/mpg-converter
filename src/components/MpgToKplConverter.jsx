@@ -19,6 +19,16 @@ const MpgToKplConverter = () => {
     return kpl.toFixed(2);
   };
 
+  // Calculate L/100km from MPG
+  const calculateLper100km = (mpgValue) => {
+    if (!mpgValue || isNaN(mpgValue)) return "";
+    // First convert to KPL
+    const kpl = (mpgValue * MILES_TO_KM) / GALLONS_TO_LITERS;
+    // Then convert to L/100km (L/100km = 100/KPL)
+    const lper100km = 100 / kpl;
+    return lper100km.toFixed(2);
+  };
+
   const handleInputChange = (e) => {
     const value = e.target.value;
     setMpg(value);
@@ -47,6 +57,13 @@ const MpgToKplConverter = () => {
             <Label>Kilometers per Liter (KPL)</Label>
             <div className="p-2 bg-gray-100 rounded-md text-lg font-medium">
               {calculateKpl(mpg) || "0.00"} KPL
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Liters per 100 Kilometers (L/100km)</Label>
+            <div className="p-2 bg-gray-100 rounded-md text-lg font-medium">
+              {calculateLper100km(mpg) || "0.00"} L/100km
             </div>
           </div>
         </div>
