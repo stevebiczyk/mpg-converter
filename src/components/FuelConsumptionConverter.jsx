@@ -19,7 +19,7 @@ const FuelConsumptionConverter = () => {
       return {
         impmpg: "0.00",
         usmpg: "0.00",
-        kpl: "0.00",
+        kmpl: "0.00",
         lper100km: "0.00",
         mpl: "0.00",
         kmpig: "0.00",
@@ -27,37 +27,37 @@ const FuelConsumptionConverter = () => {
       };
     }
 
-    // First convert to KPL as our base unit
-    let kpl;
+    // First convert to kmpl as our base unit
+    let kmpl;
     switch (fromUnit) {
       case "impmpg":
-        kpl = (inputValue * MILES_TO_KM) / IMPERIAL_GALLON_TO_LITERS;
+        kmpl = (inputValue * MILES_TO_KM) / IMPERIAL_GALLON_TO_LITERS;
         break;
       case "usmpg":
-        kpl = (inputValue * MILES_TO_KM) / US_GALLON_TO_LITERS;
+        kmpl = (inputValue * MILES_TO_KM) / US_GALLON_TO_LITERS;
         break;
-      case "kpl":
-        kpl = inputValue;
+      case "kmpl":
+        kmpl = inputValue;
         break;
       case "lper100km":
-        kpl = 100 / inputValue;
+        kmpl = 100 / inputValue;
         break;
       case "mpl":
-        kpl = inputValue * MILES_TO_KM;
+        kmpl = inputValue * MILES_TO_KM;
         break;
       default:
-        kpl = 0;
+        kmpl = 0;
     }
 
-    // Then convert KPL to all other units
+    // Then convert kmpl to all other units
     return {
-      impmpg: ((kpl * IMPERIAL_GALLON_TO_LITERS) / MILES_TO_KM).toFixed(2),
-      usmpg: ((kpl * US_GALLON_TO_LITERS) / MILES_TO_KM).toFixed(2),
-      kpl: kpl.toFixed(2),
-      lper100km: (100 / kpl).toFixed(2),
-      mpl: (kpl / MILES_TO_KM).toFixed(2),
-      kmpig: (kpl * IMPERIAL_GALLON_TO_LITERS).toFixed(2),
-      kmpusg: (kpl * US_GALLON_TO_LITERS).toFixed(2),
+      impmpg: ((kmpl * IMPERIAL_GALLON_TO_LITERS) / MILES_TO_KM).toFixed(2),
+      usmpg: ((kmpl * US_GALLON_TO_LITERS) / MILES_TO_KM).toFixed(2),
+      kmpl: kmpl.toFixed(2),
+      lper100km: (100 / kmpl).toFixed(2),
+      mpl: (kmpl / MILES_TO_KM).toFixed(2),
+      kmpig: (kmpl * IMPERIAL_GALLON_TO_LITERS).toFixed(2),
+      kmpusg: (kmpl * US_GALLON_TO_LITERS).toFixed(2),
     };
   };
   const handleInputChange = (e) => {
@@ -95,16 +95,51 @@ const FuelConsumptionConverter = () => {
           </div>
 
           <div className="space-y-2">
-            <Label>Kilometers per Liter (KPL)</Label>
+            <Label>Imperial MPG</Label>
             <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
-              {calculateKpl(value) || "0.00"} KPL
+              {results.impmpg || "0.00"}
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label>Liters per 100 Kilometers (L/100km)</Label>
+            <Label>US MPG</Label>
             <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
-              {calculateLper100km(value) || "0.00"} L/100km
+              {results.usmpg || "0.00"}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Kilometers per Liter </Label>
+            <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
+              {results.kmpl || "0.00"}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Liters per 100Km</Label>
+            <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
+              {results.lper100km || "0.00"}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Miles per Liter</Label>
+            <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
+              {results.mpl || "0.00"}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Km per Imperial Gallon</Label>
+            <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
+              {results.kmpig || "0.00"}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Km per US Gallon</Label>
+            <div className="p-2 bg-slate-100 rounded-md text-lg font-medium">
+              {results.kmpusg || "0.00"}
             </div>
           </div>
         </div>
