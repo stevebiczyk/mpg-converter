@@ -10,33 +10,62 @@ const FuelConsumptionConverter = () => {
   const [inputUnit, setInputUnit] = useState("impmpg");
 
   // Conversion constants
-  const IMPERIAL_GALLONS_TO_LITERS = 4.54609188;
+  const IMPERIAL_GALLON_TO_LITERS = 4.54609188;
   const US_GALLON_TO_LITERS = 3.78541178;
   const MILES_TO_KM = 1.609344;
 
-  // Calculate KPL from MPG
-  const calculateKpl = (mpgValue) => {
-    if (!mpgValue || isNaN(mpgValue)) return "";
+  const calculateAllConversions = (inputValue, fromUnit) => {
+    if (!inputValue || isNaN(inputValue)) {
+      return {
+        impmpg: "0.00",
+        usmpg: "0.00",
+        kpl: "0.00",
+        lper100km: "0.00",
+        mpl: "0.00",
+        kmpig: "0.00",
+        kmpusg: "0.00",
+      };
+    }
 
-    // Formula: MPG * (km/mile) / (L/gallon)
-    const kpl = (mpgValue * MILES_TO_KM) / IMPERIAL_GALLONS_TO_LITERS;
-    return kpl.toFixed(2);
+    // First convert to KPL as our base unit
+    let kpl;
+    switch (fromUnit) {
+      case "impmpg":
+        kpl = (inputValue * MILES_TO_KM) / IMPERIAL_GALLON_TO_LITERS;
+        break;
+      case "usmpg":
+        kpl = (inputValue * MILES_TO_KM) / US_GALLON_TO_LITERS;
+        break;
+      case "kpl":
+        kpl = inputValue;
+        break;
+      case "lper100km":
+        kpl = 100 / inputValue;
+        break;
+      case "mpl":
+        kpl = inputValue * MILES_TO_KM;
+        break;
+      default:
+        kpl = 0;
+    }
+
+    // Then convert KPL to all other units
+    return {
+      impmpg: ((kpl * IMPERIAL_GALLON_TO_LITERS) / MILES_TO_KM).toFixed(2),
+      usmpg: ((kpl * US_GALLON_TO_LITERS) / MILES_TO_KM).toFixed(2),
+      kpl: kpl.toFixed(2),
+      lper100km: (100 / kpl).toFixed(2),
+      mpl: (kpl / MILES_TO_KM).toFixed(2),
+      kmpig: (kpl * IMPERIAL_GALLON_TO_LITERS).toFixed(2),
+      kmpusg: (kpl * US_GALLON_TO_LITERS).toFixed(2),
+    };
   };
-
-  // Calculate L/100km from MPG
-  const calculateLper100km = (mpgValue) => {
-    if (!mpgValue || isNaN(mpgValue)) return "";
-    // First convert to KPL
-    const kpl = (mpgValue * MILES_TO_KM) / IMPERIAL_GALLONS_TO_LITERS;
-    // Then convert to L/100km (L/100km = 100/KPL)
-    const lper100km = 100 / kpl;
-    return lper100km.toFixed(2);
-  };
-
   const handleInputChange = (e) => {
     const value = e.target.value;
     setValue(value);
   };
+
+  const results = calculateAllConversions(value, inputUnit);
 
   const handleReset = () => {
     setValue("");
