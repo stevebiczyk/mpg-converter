@@ -3,6 +3,13 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { RotateCcw } from "lucide-react";
 
 const FuelConsumptionConverter = () => {
@@ -65,6 +72,10 @@ const FuelConsumptionConverter = () => {
     setValue(value);
   };
 
+  const handleUnitChange = (newUnit) => {
+    setInputUnit(newUnit);
+  };
+
   const results = calculateAllConversions(value, inputUnit);
 
   const handleReset = () => {
@@ -74,24 +85,38 @@ const FuelConsumptionConverter = () => {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle>
+        <CardTitle className="flex justify-between items-center">
           Fuel Consumption Converter
-          <Button variant="outline" size="icon" onClick={handleReset}></Button>
-          <RotateCcw className="h-4 w-4" />
+          <Button variant="outline" size="icon" onClick={handleReset}>
+            <RotateCcw className="h-4 w-4" />
+          </Button>
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="mpg">Miles per Imperial Gallon (MPG)</Label>
-            <Input
-              id="mpg"
-              type="number"
-              value={value}
-              onChange={handleInputChange}
-              placeholder="Enter MPG value"
-              className="w-full"
-            />
+            <Label>Input Value and Unit</Label>
+            <div className="flex space-x-2">
+              <Input
+                type="number"
+                value={value}
+                onChange={handleInputChange}
+                placeholder="Enter value"
+                className="flex-grow"
+              />
+              <Select value={inputUnit} onValueChange={handleUnitChange}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Select unit" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="impmpg">Imperial MPG</SelectItem>
+                  <SelectItem value="usmpg">US MPG</SelectItem>
+                  <SelectItem value="kpl">KM/L</SelectItem>
+                  <SelectItem value="lper100km">L/100KM</SelectItem>
+                  <SelectItem value="mpl">Miles/L</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           <div className="space-y-2">
