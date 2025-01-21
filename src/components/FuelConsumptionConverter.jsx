@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { RotateCcw } from "lucide-react";
 
 const FuelConsumptionConverter = () => {
   const [mpg, setMpg] = useState("");
@@ -34,10 +36,18 @@ const FuelConsumptionConverter = () => {
     setMpg(value);
   };
 
+  const handleReset = () => {
+    setMpg("");
+  };
+
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle>MPG Converter</CardTitle>
+        <CardTitle>
+          Fuel Consumption Converter
+          <Button variant="outline" size="icon" onClick={handleReset}></Button>
+          <RotateCcw className="h-4 w-4" />
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
