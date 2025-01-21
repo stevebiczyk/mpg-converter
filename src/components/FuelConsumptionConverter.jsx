@@ -17,6 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import PropTypes from "prop-types";
 
 const FuelConsumptionConverter = () => {
   const [value, setValue] = useState("");
@@ -116,6 +117,13 @@ const FuelConsumptionConverter = () => {
       </div>
     </div>
   );
+
+  // Define prop types
+  ResultRow.propTypes = {
+    label: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    tooltip: PropTypes.string,
+  };
 
   return (
     <Card className="w-full max-w-md">
